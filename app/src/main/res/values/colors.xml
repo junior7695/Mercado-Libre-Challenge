@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Material Theme Colors-->
+    <color name="color_primary">#ffe900</color>
+    <color name="color_primary_variant">#c7b700</color>
+    <color name="color_secondary">#002f6d</color>
+    <color name="color_secondary_variant">#000641</color>
+
+    <color name="color_background">#f5f5f5</color>
+    <color name="color_surface">#ffffff</color>
+    <color name="color_error">#d50000</color>
+
+    <color name="color_on_primary">#000000</color>
+    <color name="color_on_secondary">#ffffff</color>
+    <color name="color_on_background">#000000</color>
+    <color name="color_on_surface">#000000</color>
+    <color name="color_on_error">#ffffff</color>
+
+    <color name="color_divider">#1E000000</color>
+
+    <!--CollapsingToolbarLayout-->
+    <color name="color_collapsin_toolbar_layout">@color/color_primary</color>
+
+    <!-- Splash -->
+    <color name="ic_launcher_background">#FFE900</color>
+</resources>
