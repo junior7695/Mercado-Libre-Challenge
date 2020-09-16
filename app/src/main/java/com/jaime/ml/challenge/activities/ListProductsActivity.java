@@ -19,6 +19,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -150,16 +151,21 @@ public class ListProductsActivity extends AppCompatActivity implements OnItemCli
         protected void onPostExecute(ArrayList<ProductML> result) {
             super.onPostExecute(result);
             if (result == null) {
-                Toast.makeText(ListProductsActivity.this,"Error de Cuminación",Toast.LENGTH_LONG).show();
+                Toast toast = Toast.makeText(ListProductsActivity.this,"Error de Cuminación",Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,150);
+                toast.show();
                 finish();
             } else if (result.size() < 1) {
-                Toast.makeText(ListProductsActivity.this,"Sin Resultados de Búsqueda",Toast.LENGTH_LONG).show();
+                Toast toast = Toast.makeText(ListProductsActivity.this,"Sin Resultados de Búsqueda",Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,150);
+                toast.show();
                 finish();
+            } else {
+                adapter.setList(result);
             }
             shimmer.setVisibility(View.GONE);
             shimmer.stopShimmer();
             //se setea la lista al adaptador del reciclerView
-            adapter.setList(result);
         }
 
         //metodo que realizara la llamada del metodo estatico

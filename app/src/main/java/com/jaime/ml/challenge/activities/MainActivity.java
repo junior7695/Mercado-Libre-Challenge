@@ -50,6 +50,7 @@ import androidx.cursoradapter.widget.SimpleCursorAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jaime.ml.challenge.R;
 import com.jaime.ml.challenge.models.Suggestion;
+import com.jaime.ml.challenge.models.Suggestion_Table;
 import com.jaime.ml.challenge.tasks.SearchSuggestionsTask;
 import com.jaime.ml.challenge.utils.ThemeUtils;
 import com.jaime.ml.challenge.utils.Utilities;
@@ -228,7 +229,13 @@ public class MainActivity extends AppCompatActivity {
         Suggestion suggestion = new Suggestion();
         suggestion.setQuery(query);
         try {
-            suggestion.save();
+            List<Suggestion> suggestions = SQLite
+                    .select()
+                    .from(Suggestion.class)
+                    .where(Suggestion_Table.query.is(query))
+                    .queryList();
+            if (suggestions.size() < 1)
+                suggestion.save();
         } catch (SQLiteConstraintException e) {
             e.printStackTrace();
         }
