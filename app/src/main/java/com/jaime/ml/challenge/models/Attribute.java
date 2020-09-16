@@ -1,62 +1,84 @@
 package com.jaime.ml.challenge.models;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+/*-----------------------------------------------*/
+/*					Author                       */
+/*				Jaime Vallejo                    */
+/*                                               */
+/*				Fecha Creacion                   */
+/*				  14/09/2020                     */
+/*                                               */
+/*				Descripcion                      */
+/*   Proyecto creado como un Challenge de ML     */
+/*   como proceso de selección                   */
+/*-----------------------------------------------*/
+
+
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
 public class Attribute {
+    @SerializedName("source")
     private long source;
+    @SerializedName("id")
     private String id;
+    @SerializedName("name")
     private String name;
+    @SerializedName("value_id")
     private String valueId;
+    @SerializedName("attribute_group_name")
     private String attributeGroupName;
+    @SerializedName("value_name")
     private String valueName;
+    @SerializedName("value_struct")
     private Struct valueStruct;
+    @SerializedName("values")
     private List<Value> values;
+    @SerializedName("attribute_group_id")
     private String attributeGroupId;
 
-    @JsonProperty("source")
+
     public long getSource() { return source; }
-    @JsonProperty("source")
+
     public void setSource(long value) { this.source = value; }
 
-    @JsonProperty("id")
+
     public String getId() { return id; }
-    @JsonProperty("id")
+
     public void setId(String value) { this.id = value; }
 
-    @JsonProperty("name")
+
     public String getName() { return name; }
-    @JsonProperty("name")
+
     public void setName(String value) { this.name = value; }
 
-    @JsonProperty("value_id")
+
     public String getValueId() { return valueId; }
-    @JsonProperty("value_id")
+
     public void setValueId(String value) { this.valueId = value; }
 
-    @JsonProperty("attribute_group_name")
+
     public String getAttributeGroupName() { return attributeGroupName; }
-    @JsonProperty("attribute_group_name")
+
     public void setAttributeGroupName(String value) { this.attributeGroupName = value; }
 
-    @JsonProperty("value_name")
+
     public String getValueName() { return valueName; }
-    @JsonProperty("value_name")
+
     public void setValueName(String value) { this.valueName = value; }
 
-    @JsonProperty("value_struct")
+
     public Struct getValueStruct() { return valueStruct; }
-    @JsonProperty("value_struct")
+
     public void setValueStruct(Struct value) { this.valueStruct = value; }
 
-    @JsonProperty("values")
+
     public List<Value> getValues() { return values; }
-    @JsonProperty("values")
+
     public void setValues(List<Value> value) { this.values = value; }
 
-    @JsonProperty("attribute_group_id")
+
     public String getAttributeGroupId() { return attributeGroupId; }
-    @JsonProperty("attribute_group_id")
+
     public void setAttributeGroupId(String value) { this.attributeGroupId = value; }
 }

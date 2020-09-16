@@ -1,30 +1,45 @@
 package com.jaime.ml.challenge.models;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+/*-----------------------------------------------*/
+/*					Author                       */
+/*				Jaime Vallejo                    */
+/*                                               */
+/*				Fecha Creacion                   */
+/*				  14/09/2020                     */
+/*                                               */
+/*				Descripcion                      */
+/*   Proyecto creado como un Challenge de ML     */
+/*   como proceso de selección                   */
+/*-----------------------------------------------*/
+
+import com.google.gson.annotations.SerializedName;
 
 public class Address {
+    @SerializedName("state_id")
     private String stateId;
+    @SerializedName("state_name")
     private String stateName;
+    @SerializedName("city_id")
     private String cityId;
+    @SerializedName("city_name")
     private String cityName;
 
-    @JsonProperty("state_id")
     public String getStateId() { return stateId; }
-    @JsonProperty("state_id")
+
     public void setStateId(String value) { this.stateId = value; }
 
-    @JsonProperty("state_name")
+
     public String getStateName() { return stateName; }
-    @JsonProperty("state_name")
+
     public void setStateName(String value) { this.stateName = value; }
 
-    @JsonProperty("city_id")
+
     public String getCityId() { return cityId; }
-    @JsonProperty("city_id")
+
     public void setCityId(String value) { this.cityId = value; }
 
-    @JsonProperty("city_name")
+
     public String getCityName() { return cityName; }
-    @JsonProperty("city_name")
+
     public void setCityName(String value) { this.cityName = value; }
 }

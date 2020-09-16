@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,14 +7,116 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_main">
 
-    <fragment
-        android:id="@+id/nav_host_fragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:defaultNavHost="true"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:navGraph="@navigation/mobile_navigation" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tvAuthor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/text_margin"
+            android:layout_marginVertical="@dimen/text_margin"
+            android:text="@string/value_author"
+            style="@style/TextAppearance.MaterialComponents.Headline3"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgFoto"
+                android:layout_width="136dp"
+                android:layout_height="136dp"
+                android:layout_gravity="start|bottom"
+                android:layout_marginStart="32dp"
+                android:layout_marginBottom="@dimen/common_padding_detail_img"
+                android:src="@drawable/titulo_perfil"
+                app:civ_border_width="@dimen/common_padding_nano"
+                app:civ_border_color="@color/color_secondary"/>
+            <TextView
+                android:id="@+id/tvNameAuthor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/text_margin"
+                android:layout_marginVertical="@dimen/text_margin"
+                android:text="@string/value_name_author"
+                style="@style/TextAppearance.MaterialComponents.Headline5"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/btnPhoneAuthor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/ic_phone_48"
+                app:iconTint="@color/color_secondary"
+                android:layout_marginLeft="@dimen/text_margin"
+                android:layout_marginVertical="@dimen/text_margin"
+                android:text="Celular"
+                android:textColor="@color/color_secondary"
+                style="@style/Widget.MaterialComponents.Button.TextButton"/>
+
+            <TextView
+                android:id="@+id/tvPhoneAuthor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/text_margin"
+                android:layout_marginVertical="@dimen/text_margin"
+                android:text="@string/value_phone_author"
+                android:textIsSelectable="true"
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <Button
+                android:id="@+id/btnEmailAuthor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/ic_email"
+                app:iconTint="@color/color_secondary"
+                android:layout_marginLeft="@dimen/text_margin"
+                android:layout_marginVertical="@dimen/text_margin"
+                android:text="Correo"
+                android:textColor="@color/color_secondary"
+                style="@style/Widget.MaterialComponents.Button.TextButton"/>
+
+            <TextView
+                android:id="@+id/tvEmailAuthor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/text_margin"
+                android:layout_marginVertical="@dimen/text_margin"
+                android:text="@string/value_email_author"
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvDescriptionAuthor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/text_margin"
+            android:layout_marginVertical="@dimen/text_margin"
+            android:text="@string/value_description_author"
+            style="@style/TextAppearance.MaterialComponents.Body1"
+            />
+        
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="52dp"/>
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

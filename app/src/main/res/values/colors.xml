@@ -24,4 +24,7 @@
 
     <!-- Splash -->
     <color name="ic_launcher_background">#FFE900</color>
+
+    <!-- PlaceHolder -->
+    <color name="placeholder_bg">#dddddd</color>
 </resources>

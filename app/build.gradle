@@ -34,6 +34,7 @@ def butterknifeVersion = "10.2.0"
 def dbflowVersion = "4.2.4"
 def glideVersion = "4.10.0"
 def circleimageviewVersion = "3.0.1"
+def facebookShimmerVersion = "0.5.0"
 
 dependencies {
     //noinspection GradleDependency
@@ -56,12 +57,7 @@ dependencies {
 
     annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflowVersion}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${butterknifeVersion}"
-    annotationProcessor "com.github.bumptech.glide:compiler:${glideVersion}"
-
-    //Parse JSON
-    implementation 'com.fasterxml.jackson.core:jackson-core:2.10.1'
-    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.10.1'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.10.1'
+    implementation "com.facebook.shimmer:shimmer:${facebookShimmerVersion}"
     
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

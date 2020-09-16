@@ -15,8 +15,8 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:titleTextColor="@color/color_on_primary"
+            android:background="@color/color_primary"
+            app:titleTextColor="@color/color_secondary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
         <View
             android:id="@+id/anchor_dropdown"
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        android:src="@drawable/ic_nights_stay_24" />
 
     <include layout="@layout/content_main" />
 

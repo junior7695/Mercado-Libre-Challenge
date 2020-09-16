@@ -1,13 +1,16 @@
 package com.jaime.ml.challenge.activities;
 
-/* *
- * Project: MD Top from com.alain.cursos.top
- * Created by Alain Nicolás Tello on 10/11/2019 at 06:33 PM
- * All rights reserved 2020.
- * Course Material Design and Theming Professional for Android
- * More info: https://www.udemy.com/course/material-design-theming-diseno-profesional-para-android/
- * Cursos Android ANT
- */
+/*-----------------------------------------------*/
+/*					Author                       */
+/*				Jaime Vallejo                    */
+/*                                               */
+/*				Fecha Creacion                   */
+/*				  14/09/2020                     */
+/*                                               */
+/*				Descripcion                      */
+/*   Proyecto creado como un Challenge de ML     */
+/*   como proceso de selección                   */
+/*-----------------------------------------------*/
 
 import android.app.Application;
 

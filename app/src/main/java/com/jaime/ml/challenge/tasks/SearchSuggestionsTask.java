@@ -1,16 +1,29 @@
 package com.jaime.ml.challenge.tasks;
 
-import android.app.SearchManager;
-import android.database.MatrixCursor;
+/*-----------------------------------------------*/
+/*					Author                       */
+/*				Jaime Vallejo                    */
+/*                                               */
+/*				Fecha Creacion                   */
+/*				  14/09/2020                     */
+/*                                               */
+/*				Descripcion                      */
+/*   Proyecto creado como un Challenge de ML     */
+/*   como proceso de selección                   */
+/*-----------------------------------------------*/
+
 import android.os.AsyncTask;
-import android.provider.BaseColumns;
 
 import androidx.appcompat.widget.SearchView;
-import androidx.cursoradapter.widget.CursorAdapter;
 
+import com.jaime.ml.challenge.models.Suggestion;
 import com.jaime.ml.challenge.utils.ApiUtils;
+import com.jaime.ml.challenge.utils.Utilities;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SearchSuggestionsTask extends AsyncTask<String, Void, ArrayList<String>> {
 
@@ -22,30 +35,26 @@ public class SearchSuggestionsTask extends AsyncTask<String, Void, ArrayList<Str
 
     protected void onPostExecute(ArrayList<String> result) {
         super.onPostExecute(result);
-        loadSuggestions(searchView,result);
+        if (result.size() > 0) {
+            Utilities.loadSuggestions(searchView,result);
+        } else {
+            List<Suggestion> suggestions = SQLite
+                    .select()
+                    .from(Suggestion.class)
+                    .queryList();
+            Utilities.loadSuggestionsSaved(searchView,suggestions);
+        }
     }
 
     @Override
     protected ArrayList<String>  doInBackground(String... strings) {
-        return ApiUtils.getSuggestionsApi(strings[0]);
-    }
-
-    private void loadSuggestions(SearchView searchView, ArrayList<String> searchResponse) {
-
-        String[] columns = {
-                BaseColumns._ID,
-                SearchManager.SUGGEST_COLUMN_TEXT_1,
-                SearchManager.SUGGEST_COLUMN_INTENT_DATA
-        };
-
-        MatrixCursor cursor = new MatrixCursor(columns);
-
-        for (int i = 0; i < searchResponse.size(); i++) {
-
-            String[] tmp = {Integer.toString(i),  searchResponse.get(i), "COLUMNT_INTENT_DATA"};
-            cursor.addRow(tmp);
+        ArrayList<String> suggestions = new ArrayList<>();
+        try {
+            suggestions = ApiUtils.getSuggestionsApi(strings[0]);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        CursorAdapter suggestionAdapter = searchView.getSuggestionsAdapter();
-        suggestionAdapter.changeCursor(cursor);
+        return suggestions;
     }
+
 }

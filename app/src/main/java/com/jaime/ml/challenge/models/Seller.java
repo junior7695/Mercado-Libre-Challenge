@@ -1,42 +1,61 @@
 package com.jaime.ml.challenge.models;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+/*-----------------------------------------------*/
+/*					Author                       */
+/*				Jaime Vallejo                    */
+/*                                               */
+/*				Fecha Creacion                   */
+/*				  14/09/2020                     */
+/*                                               */
+/*				Descripcion                      */
+/*   Proyecto creado como un Challenge de ML     */
+/*   como proceso de selección                   */
+/*-----------------------------------------------*/
+
+
+import com.google.gson.annotations.SerializedName;
 
 public class Seller {
+    @SerializedName("id")
     private long id;
-    private Object permalink;
-    private Object registrationDate;
+    @SerializedName("permalink")
+    private String permalink;
+    @SerializedName("registration_date")
+    private String registrationDate;
+    @SerializedName("car_dealer")
     private boolean carDealer;
+    @SerializedName("real_estate_agency")
     private boolean realEstateAgency;
-    private Object tags;
+    @SerializedName("tags")
+    private String tags;
 
-    @JsonProperty("id")
+
     public long getId() { return id; }
-    @JsonProperty("id")
+
     public void setId(long value) { this.id = value; }
 
-    @JsonProperty("permalink")
-    public Object getPermalink() { return permalink; }
-    @JsonProperty("permalink")
-    public void setPermalink(Object value) { this.permalink = value; }
 
-    @JsonProperty("registration_date")
-    public Object getRegistrationDate() { return registrationDate; }
-    @JsonProperty("registration_date")
-    public void setRegistrationDate(Object value) { this.registrationDate = value; }
+    public String getPermalink() { return permalink; }
 
-    @JsonProperty("car_dealer")
+    public void setPermalink(String value) { this.permalink = value; }
+
+
+    public String getRegistrationDate() { return registrationDate; }
+
+    public void setRegistrationDate(String value) { this.registrationDate = value; }
+
+
     public boolean getCarDealer() { return carDealer; }
-    @JsonProperty("car_dealer")
+
     public void setCarDealer(boolean value) { this.carDealer = value; }
 
-    @JsonProperty("real_estate_agency")
+
     public boolean getRealEstateAgency() { return realEstateAgency; }
-    @JsonProperty("real_estate_agency")
+
     public void setRealEstateAgency(boolean value) { this.realEstateAgency = value; }
 
-    @JsonProperty("tags")
-    public Object getTags() { return tags; }
-    @JsonProperty("tags")
-    public void setTags(Object value) { this.tags = value; }
+
+    public String getTags() { return tags; }
+
+    public void setTags(String value) { this.tags = value; }
 }

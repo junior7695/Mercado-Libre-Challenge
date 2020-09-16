@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="white_t">#88ffffff</color>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <color name="white_t" tools:ignore="MissingDefaultResource">#88ffffff</color>
 
     <!--Material Theme Colors-->
-    <color name="color_primary">#f8bbd0</color>
-    <color name="color_primary_variant">#c48b9f</color>
-    <color name="color_secondary">#ff9100</color>
-    <color name="color_secondary_variant">#c56200</color>
+    <color name="color_primary">#002f6d</color>
+    <color name="color_primary_variant">#000641</color>
+    <color name="color_secondary">#ffe900</color>
+    <color name="color_secondary_variant">#c7b700</color>
 
-    <color name="color_background">#000000</color>
+    <color name="color_background">#212121</color>
     <color name="color_surface">#212121</color>
     <color name="color_error">#ff8a80</color>
 
@@ -18,8 +18,8 @@
     <color name="color_on_surface">#ffffff</color>
     <color name="color_on_error">#000000</color>
 
-    <color name="color_divider">#1E000000</color>
+    <color name="color_divider">#50ffffff</color>
 
     <!--CollapsingToolbarLayout-->
-    <color name="color_collapsin_toolbar_layout">@color/color_surface</color>
+    <color name="color_collapsin_toolbar_layout">@color/color_primary</color>
 </resources>

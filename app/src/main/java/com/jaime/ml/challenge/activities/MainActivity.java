@@ -1,5 +1,17 @@
 package com.jaime.ml.challenge.activities;
 
+/*-----------------------------------------------*/
+/*					Author                       */
+/*				Jaime Vallejo                    */
+/*                                               */
+/*				Fecha Creacion                   */
+/*				  14/09/2020                     */
+/*                                               */
+/*				Descripcion                      */
+/*   Proyecto creado como un Challenge de ML     */
+/*   como proceso de selección                   */
+/*-----------------------------------------------*/
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
@@ -11,8 +23,10 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.BaseColumns;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,7 +36,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
-import android.widget.Toast;
+import android.widget.AutoCompleteTextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -32,32 +46,57 @@ import androidx.core.content.ContextCompat;
 import androidx.core.view.MenuItemCompat;
 import androidx.cursoradapter.widget.CursorAdapter;
 import androidx.cursoradapter.widget.SimpleCursorAdapter;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.jaime.ml.challenge.R;
+import com.jaime.ml.challenge.models.Suggestion;
 import com.jaime.ml.challenge.tasks.SearchSuggestionsTask;
 import com.jaime.ml.challenge.utils.ThemeUtils;
+import com.jaime.ml.challenge.utils.Utilities;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private AppBarConfiguration mAppBarConfiguration;
+    //Variable para SharedPreferences del Usuario
     private SharedPreferences mSharedPreferences;
+    //Variable Cursor de las sugerencias de busqueda
     private CursorAdapter suggestionAdapter;
-    Toolbar toolbar;
-    private Context context;
+    //Variable que controla el toolbar
+    private Toolbar toolbar;
+    //Variable que creara un delay al momento de editar la barra de busqueda
+    //El motivo por el cual se crea, es para evitar las multiples llamadas del query de busqueda,
+    //sin tener que realizar mayores ajustes
+    private Handler mHandler;
+    //Controlar el darckTheme
+    boolean mIsModeNight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = this;
         configTheme();
+        initializeVariables();
+        setSupportActionBar(toolbar);
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(view -> {
+            if (mIsModeNight) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                mIsModeNight = false;
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                mIsModeNight = true;
+            }
+            SharedPreferences.Editor editor = mSharedPreferences.edit();
+            editor.putBoolean(ThemeUtils.SP_DARK_THEME, mIsModeNight);
+            editor.apply();
+        });
+
+    }
+
+    //Metodo que inicializa las variables
+    private void initializeVariables() {
+        mHandler = new Handler();
         setContentView(R.layout.activity_main);
         toolbar = findViewById(R.id.toolbar);
         suggestionAdapter = new SimpleCursorAdapter(
@@ -67,45 +106,17 @@ public class MainActivity extends AppCompatActivity {
                 new String[]{SearchManager.SUGGEST_COLUMN_TEXT_1},
                 new int[]{android.R.id.text1},
                 0);
-        setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
-                .setDrawerLayout(drawer)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
-        // Get the intent, verify the action and get the query
-        Intent intent = getIntent();
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            doMySearch(query);
-        }
     }
 
-    private void doMySearch(String query) {
-        Toast.makeText(this,query, Toast.LENGTH_SHORT).show();
-    }
-
+    //Metodo que forza el tema debido a que al iniciar el activity se tiene el del SplashTheme
+    //Consulta el SharedPreferences para validar el tema guardado por el usuario
     private void configTheme() {
         setTheme(R.style.MyTheme_DayNight);
         mSharedPreferences = getPreferences(MODE_PRIVATE);
-        boolean mIsModeNight = mSharedPreferences.getBoolean(ThemeUtils.SP_DARK_THEME, false);
-        if (mIsModeNight){
+        mIsModeNight = mSharedPreferences.getBoolean(ThemeUtils.SP_DARK_THEME, false);
+        if (mIsModeNight) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else { // TODO: 22/04/2020 faltó añadir esta validación para cuando el modo oscuro esta activado en el sistema.
+        } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
     }
@@ -113,36 +124,27 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("ResourceAsColor")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        // Inflate the menu; agrega los items de menu del main al actual toolbar.
         getMenuInflater().inflate(R.menu.main, menu);
         MenuItem mSearchItem = menu.findItem(R.id.search_icon);
-        /*MenuItem menuItemSearch = menu.findItem(R.id.search_icon);
-        SearchView searchView = (SearchView) menuItemSearch.getActionView();
-        searchView.setQueryHint("Buscar en ML Challenge");
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });*/
 
         SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView =
                 (SearchView) mSearchItem.getActionView();
         ComponentName componentName = new ComponentName(this, MainActivity.class);
+        AutoCompleteTextView searchAutoCompleteTextView = (AutoCompleteTextView) searchView.findViewById(androidx.appcompat.R.id.search_src_text);
+        searchAutoCompleteTextView.setThreshold(0);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName));
         searchView.setSuggestionsAdapter(suggestionAdapter);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if (query.length() > 0) {
-                    Toast.makeText(context,query,Toast.LENGTH_SHORT).show();
+                    Suggestion suggestion = new Suggestion();
+                    suggestion.setQuery(query);
+                    suggestion.save();
+                    goToListProductsResultsActivity(query);
                 } else {
                     return false;
                 }
@@ -152,10 +154,17 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String query) {
+                mHandler.removeCallbacksAndMessages(null);
+
                 if (query.length() > 0) {
-                    new SearchSuggestionsTask(searchView).execute(query);
+                    mHandler.postDelayed(() -> new SearchSuggestionsTask(searchView).execute(query), 300);
                 } else {
-                    return false;
+                    List<Suggestion> suggestions = SQLite
+                            .select()
+                            .from(Suggestion.class)
+                            .queryList();
+                    Utilities.loadSuggestionsSaved(searchView,suggestions);
+                    return true;
                 }
 
                 return true;
@@ -168,10 +177,11 @@ public class MainActivity extends AppCompatActivity {
                     Cursor cur = searchView.
                             getSuggestionsAdapter().
                             getCursor();
-                    cur.move(position);
-                    String name = cur.getString(cur.getColumnIndex(BaseColumns._ID));
-                    Toast.makeText(context,name,Toast.LENGTH_SHORT).show();
-                } else  {
+                    cur.moveToPosition(position);
+                    String query = cur.getString(cur.getColumnIndex(BaseColumns._ID));
+                    saveSuggestion(query);
+                    goToListProductsResultsActivity(query);
+                } else {
                     return false;
                 }
                 return true;
@@ -183,10 +193,11 @@ public class MainActivity extends AppCompatActivity {
                     Cursor cur = searchView.
                             getSuggestionsAdapter().
                             getCursor();
-                    cur.move(position);
-                    String name = cur.getString(cur.getColumnIndex(SearchManager.SUGGEST_COLUMN_TEXT_1));
-                    Toast.makeText(context,name,Toast.LENGTH_SHORT).show();
-                } else  {
+                    cur.moveToPosition(position);
+                    String query = cur.getString(cur.getColumnIndex(SearchManager.SUGGEST_COLUMN_TEXT_1));
+                    saveSuggestion(query);
+                    goToListProductsResultsActivity(query);
+                } else {
                     return false;
                 }
                 return true;
@@ -195,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
         MenuItemCompat.setOnActionExpandListener(mSearchItem, new MenuItemCompat.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
-                // Called when SearchView is collapsing
+                // Llamada cuando SearchView se cierra
                 if (mSearchItem.isActionViewExpanded()) {
                     animateSearchToolbar(1, false, false);
                 }
@@ -204,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {
-                // Called when SearchView is expanding
+                // Llamada cuando SearchView se abre
                 animateSearchToolbar(1, true, true);
                 return true;
             }
@@ -212,20 +223,29 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
+    //Guardar la sugerencia
+    private void saveSuggestion(String query){
+        Suggestion suggestion = new Suggestion();
+        suggestion.setQuery(query);
+        try {
+            suggestion.save();
+        } catch (SQLiteConstraintException e) {
+            e.printStackTrace();
+        }
     }
 
+    //Metodo que crea la animacion del SearchView y cambia el color del Toolbar
     public void animateSearchToolbar(int numberOfMenuIcon, boolean containsOverflow, boolean show) {
 
-        toolbar.setBackgroundColor(ContextCompat.getColor(this, android.R.color.white));
+        if (mIsModeNight) {
+            toolbar.setBackgroundColor(ContextCompat.getColor(this, android.R.color.black));
+        } else {
+            toolbar.setBackgroundColor(ContextCompat.getColor(this, android.R.color.white));
+        }
 
         if (show) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                int width = toolbar.getWidth() -
+                @SuppressLint("PrivateResource") int width = toolbar.getWidth() -
                         (containsOverflow ? getResources().getDimensionPixelSize(R.dimen.abc_action_button_min_width_overflow_material) : 0) -
                         ((getResources().getDimensionPixelSize(R.dimen.abc_action_button_min_width_material) * numberOfMenuIcon) / 2);
                 Animator createCircularReveal = ViewAnimationUtils.createCircularReveal(toolbar,
@@ -240,7 +260,7 @@ public class MainActivity extends AppCompatActivity {
             }
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                int width = toolbar.getWidth() -
+                @SuppressLint("PrivateResource") int width = toolbar.getWidth() -
                         (containsOverflow ? getResources().getDimensionPixelSize(R.dimen.abc_action_button_min_width_overflow_material) : 0) -
                         ((getResources().getDimensionPixelSize(R.dimen.abc_action_button_min_width_material) * numberOfMenuIcon) / 2);
                 Animator createCircularReveal = ViewAnimationUtils.createCircularReveal(toolbar,
@@ -293,4 +313,11 @@ public class MainActivity extends AppCompatActivity {
         a.recycle();
         return result;
     }
+
+    private void goToListProductsResultsActivity(String query) {
+        Intent intent = new Intent(MainActivity.this, ListProductsActivity.class);
+        intent.putExtra(Utilities.INTENT_QUERY_ID, query);
+        startActivity(intent);
+    }
+
 }

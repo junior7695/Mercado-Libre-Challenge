@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/containerMain"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".activities.DetalleActivity"
+    tools:showIn="@layout/activity_detalle">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:focusableInTouchMode="true"
+        >
+
+        <TextView
+            android:id="@+id/tvName"
+            android:transitionName="@string/tn_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/text_margin"
+            android:layout_marginVertical="@dimen/text_margin"
+            style="@style/TextAppearance.MaterialComponents.Headline4"
+            android:textColor="@color/color_secondary"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="@dimen/text_margin"
+            android:layout_marginVertical="@dimen/text_margin"
+            android:layout_height="1dp"
+            android:background="@color/color_divider"/>
+
+        <TextView
+            android:id="@+id/tvPriceOriginal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/ItemMedium"
+            android:layout_marginHorizontal="@dimen/text_margin"
+            android:layout_marginTop="@dimen/text_margin"
+            />
+
+        <TextView
+            android:id="@+id/tvPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TextAppearance.MaterialComponents.Headline5"
+            android:textColor="@color/color_on_background"
+            android:textStyle="bold"
+            android:layout_marginHorizontal="@dimen/text_margin"
+            />
+
+        <TextView
+            android:id="@+id/tvStock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/ItemMedium"
+            android:layout_marginHorizontal="@dimen/text_margin"
+            android:layout_marginBottom="@dimen/text_margin"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="@dimen/text_margin"
+            android:layout_marginVertical="@dimen/text_margin"
+            android:layout_height="1dp"
+            android:background="@color/color_divider"/>
+
+        <TextView
+            android:id="@+id/tvAddressLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ubicación Producto"
+            style="@style/TextAppearance.MaterialComponents.Headline6"
+            android:textColor="@color/color_on_background"
+            android:layout_marginHorizontal="@dimen/text_margin"
+            android:layout_marginVertical="@dimen/text_margin"
+            />
+
+        <TextView
+            android:id="@+id/tvAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TextAppearance.MaterialComponents.Body1"
+            android:textColor="@color/color_on_background"
+            android:layout_marginHorizontal="@dimen/text_margin"
+            android:layout_marginBottom="@dimen/text_margin"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="@dimen/text_margin"
+            android:layout_marginVertical="@dimen/text_margin"
+            android:layout_height="1dp"
+            android:background="@color/color_divider"/>
+
+        <TextView
+            android:id="@+id/tvAttributesLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Descripción Producto"
+            style="@style/TextAppearance.MaterialComponents.Headline6"
+            android:textColor="@color/color_on_background"
+            android:layout_marginHorizontal="@dimen/text_margin"
+            android:layout_marginVertical="@dimen/text_margin"
+            />
+
+        <TextView
+            android:id="@+id/tvAttributes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TextAppearance.MaterialComponents.Body1"
+            android:textColor="@color/color_on_background"
+            android:layout_marginHorizontal="@dimen/text_margin"
+            android:layout_marginVertical="@dimen/text_margin"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnBuy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/text_margin"
+            android:text="Comprar Ya"
+            android:backgroundTint="@color/color_primary"
+            android:textColor="@color/color_secondary"
+            android:layout_marginHorizontal="@dimen/text_margin"
+            app:icon="@drawable/ic_payment"
+            app:iconTint="@color/color_secondary"
+            app:rippleColor="@color/color_secondary"
+            app:cornerRadius="@dimen/common_padding_default"
+            app:strokeColor="@color/color_secondary"
+            app:strokeWidth="@dimen/common_padding_nano"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAdd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/text_margin"
+            android:text="Agregar al Carrito"
+            android:backgroundTint="@color/color_secondary"
+            android:textColor="@color/color_primary"
+            android:layout_marginHorizontal="@dimen/text_margin"
+            app:icon="@drawable/ic_add_shopping_cart"
+            app:iconTint="@color/color_primary"
+            app:rippleColor="@color/color_primary"
+            app:cornerRadius="@dimen/common_padding_default"
+            app:strokeColor="@color/color_primary"
+            app:strokeWidth="@dimen/common_padding_nano"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+
+
+
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
